@@ -6,9 +6,9 @@ public class Main {
 
         try {
             Client client = new Client(null, 12345);
-            client.sendMessage(10);
-            System.out.println(client.getSocket().getInputStream().read());
             client.drawFrame();
+            client.sendMessage(10);
+            client.getWorld().x = client.getSocket().getInputStream().read();
         } catch (IOException e) {
             e.printStackTrace();
         }
