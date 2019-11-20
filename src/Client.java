@@ -35,16 +35,16 @@ public class Client {
 
         switch (direction){
             case "left":
-                world.x += 10;
+                world.playerPosition.x -= 10;
                 break;
             case "right":
-                world.x += 10;
+                world.playerPosition.x += 10;
                 break;
             case "up":
-                world.y -= 10;
+                world.playerPosition.y -= 10;
                 break;
             case "down":
-                world.y += 10;
+                world.playerPosition.y += 10;
                 break;
         }
 

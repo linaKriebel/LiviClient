@@ -15,6 +15,13 @@ public class WorldPanel extends JPanel {
 
         //paint players
         g.setColor(Color.RED);
-        g.fillOval(world.x,world.y, 10, 10);
+        g.fillOval(world.playerPosition.x,world.playerPosition.y, 10, 10);
+
+        //paint obstacles
+        g.setColor(Color.BLACK);
+        for(int i=0; i < world.obstacles.length; i++){
+            Coordinate obstacle = world.obstacles[i];
+            g.fillRect(obstacle.x, obstacle.y, 30, 30);
+        }
     }
 }
