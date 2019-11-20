@@ -9,16 +9,19 @@ public class Client {
     private Socket socket;
     private World world = new World();
     private JFrame frame;
-    private OutputStream outputStream;
-    private OutputStreamWriter osw;
-    private BufferedWriter bw;
+    private BufferedWriter bufferedWriter;
+    private BufferedReader bufferedReader;
+
 
     public Client(String host, int port) {
         try {
             socket = new Socket(host, port);
-            outputStream = socket.getOutputStream();
-            osw = new OutputStreamWriter(outputStream);
-            bw = new BufferedWriter(osw);
+            OutputStream outputStream = socket.getOutputStream();
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+            bufferedWriter = new BufferedWriter(outputStreamWriter);
+            InputStream inputStream = socket.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            bufferedReader = new BufferedReader(inputStreamReader);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,43 +41,49 @@ public class Client {
     }
 
     public void processMove(String direction) {
+        if (sendMessageToServer(direction)) {
 
-        switch (direction) {
-            case "left":
-                world.playerPosition.x -= 10;
-                break;
-            case "right":
-                world.playerPosition.x += 10;
-                break;
-            case "up":
-                world.playerPosition.y -= 10;
-                break;
-            case "down":
-                world.playerPosition.y += 10;
-                break;
+            switch (direction) {
+                case "left":
+                    world.playerPosition.x -= 10;
+                    break;
+                case "right":
+                    world.playerPosition.x += 10;
+                    break;
+                case "up":
+                    world.playerPosition.y -= 10;
+                    break;
+                case "down":
+                    world.playerPosition.y += 10;
+                    break;
+            }
+
+            frame.repaint();
         }
-
-        frame.repaint();
-        sendMessageToServer(direction);
+        // else don't paint
     }
 
-    public void sendMessageToServer(String sendMessage) {
+    public boolean sendMessageToServer(String sendMessage) {
         //send message to server
         try {
             sendMessage = sendMessage + "\n";
-            bw.write(sendMessage);
-            bw.flush();
+            bufferedWriter.write(sendMessage);
+            bufferedWriter.flush();
             System.out.println("Message sent to the server : " + sendMessage);
 
             //Get the return message from the server
-            /*InputStream is = socket.getInputStream();
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader br = new BufferedReader(isr);
-            String receivedMessage = br.readLine();
-            System.out.println("Message received from the server : " + receivedMessage);*/
+            String receivedMessage = bufferedReader.readLine();
+            System.out.println("Message received from the server : " + receivedMessage);
+
+            if (receivedMessage.equals("ok")) {
+                return true;
+            }
+            return false;
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
 
