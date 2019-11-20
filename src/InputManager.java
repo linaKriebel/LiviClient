@@ -1,15 +1,12 @@
-import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class InputManager implements KeyListener {
 
-    private WorldPlaceholder world;
-    private JFrame frame;
+    private Client client;
 
-    public InputManager(WorldPlaceholder world, JFrame frame){
-        this.world = world;
-        this.frame = frame;
+    public InputManager(Client client){
+        this.client = client;
     }
 
     @Override
@@ -20,20 +17,16 @@ public class InputManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            world.x += 10;
-            frame.repaint();
+            client.processMove("right");
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            world.x -= 10;
-            frame.repaint();
+            client.processMove("left");
         }
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            world.y -= 10;
-            frame.repaint();
+            client.processMove("up");
         }
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            world.y += 10;
-            frame.repaint();
+            client.processMove("down");
         }
     }
 

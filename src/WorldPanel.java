@@ -3,9 +3,9 @@ import java.awt.*;
 
 public class WorldPanel extends JPanel {
 
-    private WorldPlaceholder world;
+    private World world;
 
-    public WorldPanel(WorldPlaceholder world){
+    public WorldPanel(World world){
         this.world = world;
     }
 

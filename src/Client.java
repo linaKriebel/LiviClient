@@ -6,7 +6,7 @@ import java.net.Socket;
 public class Client {
 
     private Socket socket;
-    private WorldPlaceholder world = new WorldPlaceholder();
+    private World world = new World();
     private JFrame frame;
 
     public Client(String host, int port) {
@@ -21,7 +21,7 @@ public class Client {
         frame = new JFrame();
         WorldPanel panel = new WorldPanel(world);
 
-        frame.addKeyListener(new InputManager(world, frame));
+        frame.addKeyListener(new InputManager(this));
         frame.setTitle("Livi");
         frame.setSize(new Dimension(1000, 500));
 
@@ -38,11 +38,33 @@ public class Client {
         }
     }
 
+    public void processMove(String direction){
+
+        switch (direction){
+            case "left":
+                world.x += 10;
+                break;
+            case "right":
+                world.x += 10;
+                break;
+            case "up":
+                world.y -= 10;
+                break;
+            case "down":
+                world.y += 10;
+                break;
+        }
+
+        frame.repaint();
+        //TODO: send move to server
+    }
+
+
     public Socket getSocket() {
         return socket;
     }
 
-    public WorldPlaceholder getWorld() {
+    public World getWorld() {
         return world;
     }
 
