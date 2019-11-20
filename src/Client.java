@@ -1,5 +1,5 @@
 import javax.swing.*;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 public class Client {
@@ -16,14 +16,6 @@ public class Client {
         frame.setTitle("Livi");
         frame.add(panel);
         frame.setVisible(true);
-    }
-
-    public void sendMessage(int message){
-        try {
-            socket.getOutputStream().write(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public Socket getSocket() {
