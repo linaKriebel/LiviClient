@@ -1,25 +1,64 @@
 import javax.swing.*;
 import java.io.*;
+import java.awt.*;
+import java.io.IOException;
 import java.net.Socket;
 
 public class Client {
 
     private Socket socket;
+    private World world = new World();
+    private JFrame frame;
 
-    public Client(String host, int port) throws IOException {
-        socket = new Socket(host, port);
+    public Client(String host, int port) {
+        try {
+            socket = new Socket(host, port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void drawFrame(){
-        JFrame frame = new JFrame();
-        WorldPanel panel = new WorldPanel();
+        frame = new JFrame();
+        WorldPanel panel = new WorldPanel(world);
+
+        frame.addKeyListener(new InputManager(this));
         frame.setTitle("Livi");
+        frame.setSize(new Dimension(1000, 500));
+
         frame.add(panel);
+
         frame.setVisible(true);
     }
 
+    public void processMove(String direction){
+
+        switch (direction){
+            case "left":
+                world.x += 10;
+                break;
+            case "right":
+                world.x += 10;
+                break;
+            case "up":
+                world.y -= 10;
+                break;
+            case "down":
+                world.y += 10;
+                break;
+        }
+
+        frame.repaint();
+        //TODO: send move to server
+    }
+
+
     public Socket getSocket() {
         return socket;
+    }
+
+    public World getWorld() {
+        return world;
     }
 
 }
