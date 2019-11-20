@@ -10,8 +10,7 @@ public class Client {
     private World world = new World();
     private JFrame frame;
     private BufferedWriter bufferedWriter;
-    private BufferedReader bufferedReader;
-
+    private MessageListener messageListener;
 
     public Client(String host, int port) {
         try {
@@ -19,9 +18,9 @@ public class Client {
             OutputStream outputStream = socket.getOutputStream();
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
             bufferedWriter = new BufferedWriter(outputStreamWriter);
-            InputStream inputStream = socket.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            bufferedReader = new BufferedReader(inputStreamReader);
+            messageListener = new MessageListener(socket);
+            Thread thread = new Thread(messageListener);
+            thread.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,8 +40,6 @@ public class Client {
     }
 
     public void processMove(String direction) {
-        if (sendMessageToServer(direction)) {
-
             switch (direction) {
                 case "left":
                     world.playerPosition.x -= 10;
@@ -59,9 +56,8 @@ public class Client {
             }
 
             frame.repaint();
+            sendMessageToServer(direction);
         }
-        // else don't paint
-    }
 
     public boolean sendMessageToServer(String sendMessage) {
         //send message to server
@@ -69,16 +65,7 @@ public class Client {
             sendMessage = sendMessage + "\n";
             bufferedWriter.write(sendMessage);
             bufferedWriter.flush();
-            System.out.println("Message sent to the server : " + sendMessage);
-
-            //Get the return message from the server
-            String receivedMessage = bufferedReader.readLine();
-            System.out.println("Message received from the server : " + receivedMessage);
-
-            if (receivedMessage.equals("ok")) {
-                return true;
-            }
-            return false;
+            System.out.println(sendMessage);
 
         } catch (IOException e) {
             e.printStackTrace();
