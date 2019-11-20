@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.io.*;
 import java.awt.*;
 import java.io.IOException;
+import java.lang.invoke.SwitchPoint;
 import java.net.Socket;
 
 public class Client {
@@ -18,7 +19,7 @@ public class Client {
             OutputStream outputStream = socket.getOutputStream();
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
             bufferedWriter = new BufferedWriter(outputStreamWriter);
-            messageListener = new MessageListener(socket);
+            messageListener = new MessageListener(socket, this);
             Thread thread = new Thread(messageListener);
             thread.start();
         } catch (IOException e) {
@@ -39,25 +40,31 @@ public class Client {
         frame.setVisible(true);
     }
 
-    public void processMove(String direction) {
-            switch (direction) {
-                case "left":
-                    world.playerPosition.x -= 10;
-                    break;
-                case "right":
-                    world.playerPosition.x += 10;
-                    break;
-                case "up":
-                    world.playerPosition.y -= 10;
-                    break;
-                case "down":
-                    world.playerPosition.y += 10;
-                    break;
-            }
-
-            frame.repaint();
-            sendMessageToServer(direction);
+    public void processMove(String direction, int number) {
+        Coordinate position;
+        if (number == 1) {
+            position = world.playerPosition;
+        } else {
+            position = world.player2Position;
         }
+
+        switch (direction) {
+            case "left":
+                position.x -= 10;
+                break;
+            case "right":
+                position.x += 10;
+                break;
+            case "up":
+                position.y -= 10;
+                break;
+            case "down":
+                position.y += 10;
+                break;
+        }
+
+        frame.repaint();
+    }
 
     public boolean sendMessageToServer(String sendMessage) {
         //send message to server

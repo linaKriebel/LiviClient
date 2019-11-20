@@ -1,6 +1,7 @@
 public class World {
 
     public Coordinate playerPosition = new Coordinate(100, 100);
+    public Coordinate player2Position = new Coordinate(100, 100);
     public Coordinate[] obstacles;
 
     public World(){

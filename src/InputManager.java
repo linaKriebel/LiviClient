@@ -17,16 +17,16 @@ public class InputManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            client.processMove("right");
+            client.sendMessageToServer("right");
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            client.processMove("left");
+            client.sendMessageToServer("left");
         }
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            client.processMove("up");
+            client.sendMessageToServer("up");
         }
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            client.processMove("down");
+            client.sendMessageToServer("down");
         }
     }
 

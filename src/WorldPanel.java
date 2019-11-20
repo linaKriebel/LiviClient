@@ -16,6 +16,8 @@ public class WorldPanel extends JPanel {
         //paint players
         g.setColor(Color.RED);
         g.fillOval(world.playerPosition.x,world.playerPosition.y, 10, 10);
+        g.setColor(Color.BLUE);
+        g.fillOval(world.player2Position.x,world.player2Position.y, 10, 10);
 
         //paint obstacles
         g.setColor(Color.BLACK);

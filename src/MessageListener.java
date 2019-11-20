@@ -8,8 +8,10 @@ public class MessageListener implements Runnable{
 
     private Socket socket;
     private BufferedReader bufferedReader;
+    private Client client;
 
-    public MessageListener(Socket socket) throws IOException {
+    public MessageListener(Socket socket, Client client) throws IOException {
+        this.client = client;
         this.socket = socket;
         InputStream inputStream = socket.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -23,7 +25,9 @@ public class MessageListener implements Runnable{
             String receivedMessage = null;
             try {
                 receivedMessage = bufferedReader.readLine();
-                System.out.println(receivedMessage);
+                String[] split = receivedMessage.split(" ");
+                client.processMove(split[1], Integer.parseInt(split[0]));
+                System.out.println(" messagelistener" + receivedMessage);
             } catch (IOException e) {
                 e.printStackTrace();
             }
