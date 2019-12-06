@@ -40,28 +40,8 @@ public class Client {
         frame.setVisible(true);
     }
 
-    public void processMove(String direction, int number) {
-        Coordinate position;
-        if (number == 1) {
-            position = world.playerPosition;
-        } else {
-            position = world.player2Position;
-        }
-
-        switch (direction) {
-            case "left":
-                position.x -= 10;
-                break;
-            case "right":
-                position.x += 10;
-                break;
-            case "up":
-                position.y -= 10;
-                break;
-            case "down":
-                position.y += 10;
-                break;
-        }
+    public void processMove(Coordinate position, int number) {
+        world.setPlayerCoordinates(number, position);
 
         frame.repaint();
     }
