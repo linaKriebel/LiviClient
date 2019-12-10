@@ -6,6 +6,7 @@ public class World {
 
     public List<GameItem> players = new ArrayList<>();
     public List<GameItem> balls = new ArrayList<>();
+    public List<GameItem> obstacles = new ArrayList<>();
 
     public World(){
         GameItem player1 = new GameItem(new Coordinate(2,2), 1, Color.RED);
@@ -16,6 +17,8 @@ public class World {
         GameItem ball2 = new GameItem(new Coordinate(3, 3), 2, Color.BLACK);
         balls.add(ball1);
         balls.add(ball2);
+        GameItem obstacle1 = new GameItem(new Coordinate(5, 5), 1, Color.darkGray);
+        obstacles.add(obstacle1);
     }
 
     public Coordinate getPlayerPosition(int id){
