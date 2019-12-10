@@ -18,6 +18,9 @@ public class WorldPanel extends JPanel {
             g.setColor(player.getColor());
             g.fillOval(player.getCoordinates().x * 10, player.getCoordinates().y * 10, 10, 10);
         }
-
+        for (GameItem ball : world.balls) {
+            g.setColor(ball.getColor());
+            g.fillOval(ball.getCoordinates().x * 10, ball.getCoordinates().y * 10, 10, 10);
+        }
     }
 }

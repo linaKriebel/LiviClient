@@ -30,7 +30,7 @@ public class MessageListener implements Runnable{
                 ItemType type = ItemType.valueOf(split[1]);
                 int id = Integer.parseInt(split[2]);
                 Coordinate coordinate = new Coordinate(Integer.parseInt(split[3]), Integer.parseInt(split[4]));
-                client.processMove(coordinate, id);
+                client.processMove(coordinate, id, type);
                 System.out.println(" messagelistener" + receivedMessage);
             } catch (IOException e) {
                 e.printStackTrace();

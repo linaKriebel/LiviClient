@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.io.*;
 import java.awt.*;
 import java.io.IOException;
-import java.lang.invoke.SwitchPoint;
 import java.net.Socket;
 
 public class Client {
@@ -40,8 +39,10 @@ public class Client {
         frame.setVisible(true);
     }
 
-    public void processMove(Coordinate position, int number) {
-        world.setPlayerCoordinates(number, position);
+    public void processMove(Coordinate position, int number, ItemType type) {
+        if (type == ItemType.PLAYER) world.setPlayerCoordinates(number, position);
+
+        if (type == ItemType.BALL) world.setBallCoordinates(number, position);
 
         frame.repaint();
     }
