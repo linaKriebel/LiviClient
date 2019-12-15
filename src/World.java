@@ -9,15 +9,23 @@ public class World {
     public List<GameItem> obstacles = new ArrayList<>();
 
     public World(){
+
+        GameItem ai = new GameItem(new Coordinate(0,0), 0, Color.CYAN);
         GameItem player1 = new GameItem(new Coordinate(2,2), 1, Color.RED);
         GameItem player2 = new GameItem(new Coordinate(6,6), 2, Color.BLUE);
+
+        players.add(ai);
         players.add(player1);
         players.add(player2);
+
         GameItem ball1 = new GameItem(new Coordinate(7, 8), 1, Color.BLACK);
         GameItem ball2 = new GameItem(new Coordinate(3, 3), 2, Color.BLACK);
+
         balls.add(ball1);
         balls.add(ball2);
+
         GameItem obstacle1 = new GameItem(new Coordinate(5, 5), 1, Color.darkGray);
+
         obstacles.add(obstacle1);
     }
 
