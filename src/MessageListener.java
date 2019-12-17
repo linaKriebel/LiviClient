@@ -25,13 +25,16 @@ public class MessageListener implements Runnable{
             String receivedMessage = null;
             try {
                 receivedMessage = bufferedReader.readLine();
+                System.out.println("Message from server: " + receivedMessage);
+
+                //TODO handle commands
                 String[] split = receivedMessage.split(" ");
                 String command = split[0];
                 ItemType type = ItemType.valueOf(split[1]);
                 int id = Integer.parseInt(split[2]);
                 Coordinate coordinate = new Coordinate(Integer.parseInt(split[3]), Integer.parseInt(split[4]));
-                client.processMove(coordinate, id, type);
-                System.out.println(" messagelistener" + receivedMessage);
+
+                client.processMovement(coordinate, id, type);
             } catch (IOException e) {
                 e.printStackTrace();
             }

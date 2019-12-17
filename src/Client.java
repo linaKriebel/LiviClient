@@ -18,6 +18,7 @@ public class Client {
             OutputStream outputStream = socket.getOutputStream();
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
             bufferedWriter = new BufferedWriter(outputStreamWriter);
+
             messageListener = new MessageListener(socket, this);
             Thread thread = new Thread(messageListener);
             thread.start();
@@ -28,18 +29,27 @@ public class Client {
 
     public void drawFrame() {
         frame = new JFrame();
+        JLabel player1Label = new JLabel("Player One: 0");
+        JLabel player2Label = new JLabel("Player Two: 0");
+
         WorldPanel panel = new WorldPanel(world);
+        panel.setBackground(Color.BLACK);
+        player1Label.setForeground(Color.MAGENTA);
+        panel.add(player1Label);
+        player2Label.setForeground(Color.YELLOW);
+        panel.add(player2Label);
 
         frame.addKeyListener(new InputManager(this));
         frame.setTitle("Livi");
-        frame.setSize(new Dimension(1000, 500));
+        frame.setSize(new Dimension(600, 650));
 
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
         frame.add(panel);
-
         frame.setVisible(true);
     }
 
-    public void processMove(Coordinate position, int number, ItemType type) {
+    public void processMovement(Coordinate position, int number, ItemType type) {
         if (type == ItemType.PLAYER) world.setPlayerCoordinates(number, position);
 
         if (type == ItemType.BALL) world.setBallCoordinates(number, position);
@@ -47,18 +57,17 @@ public class Client {
         frame.repaint();
     }
 
-    public boolean sendMessageToServer(String sendMessage) {
-        //send message to server
+    public void sendMessageToServer(String message) {
+        System.out.println(message);
+        message = message + "\n";
+
         try {
-            sendMessage = sendMessage + "\n";
-            bufferedWriter.write(sendMessage);
+            bufferedWriter.write(message);
             bufferedWriter.flush();
-            System.out.println(sendMessage);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
 

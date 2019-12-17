@@ -16,15 +16,15 @@ public class WorldPanel extends JPanel {
 
         for (GameItem player : world.players) {
             g.setColor(player.getColor());
-            g.fillOval(player.getCoordinates().x * 10, player.getCoordinates().y * 10, 10, 10);
+            g.fillOval(player.getCoordinates().x * 30, player.getCoordinates().y * 30, 30, 30);
         }
         for (GameItem ball : world.balls) {
             g.setColor(ball.getColor());
-            g.fillOval(ball.getCoordinates().x * 10, ball.getCoordinates().y * 10, 10, 10);
+            g.fillOval(ball.getCoordinates().x * 30, ball.getCoordinates().y * 30, 30, 30);
         }
         for (GameItem obstacle : world.obstacles) {
             g.setColor(obstacle.getColor());
-            g.drawRect(obstacle.getCoordinates().x * 10, obstacle.getCoordinates().y * 10, 10, 10);
+            g.drawRect(obstacle.getCoordinates().x * 30, obstacle.getCoordinates().y * 30, 30, 30);
         }
     }
 }
