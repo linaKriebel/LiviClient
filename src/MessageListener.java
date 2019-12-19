@@ -32,9 +32,14 @@ public class MessageListener implements Runnable{
                 String command = split[0];
                 ItemType type = ItemType.valueOf(split[1]);
                 int id = Integer.parseInt(split[2]);
-                Coordinate coordinate = new Coordinate(Integer.parseInt(split[3]), Integer.parseInt(split[4]));
-
-                client.processMovement(coordinate, id, type);
+                if (command.equals("MOVE")) {
+                    Coordinate coordinate = new Coordinate(Integer.parseInt(split[3]), Integer.parseInt(split[4]));
+                    client.processMovement(coordinate, id, type);
+                } else {
+                    client.getWorld().removeBall(id);
+                    client.repaint();
+                    //TODO: add score to player
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

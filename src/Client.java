@@ -54,8 +54,14 @@ public class Client {
 
         if (type == ItemType.BALL) world.setBallCoordinates(number, position);
 
-        frame.repaint();
+        repaint();
     }
+
+    public void repaint() {
+        frame.repaint();
+
+    }
+
 
     public void sendMessageToServer(String message) {
         System.out.println(message);

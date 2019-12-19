@@ -10,6 +10,7 @@ public class World {
     public List<GameItem> players = new ArrayList<>();
     public List<GameItem> balls = new ArrayList<>();
     public List<GameItem> obstacles = new ArrayList<>();
+    public List<GameItem> holes = new ArrayList<>();
 
     public World(){
 
@@ -26,6 +27,12 @@ public class World {
 
         balls.add(ball1);
         balls.add(ball2);
+
+        GameItem hole1 = new GameItem(new Coordinate(10,10), 1, Color.GREEN);
+        GameItem hole2 = new GameItem(new Coordinate(15,15), 1, Color.GREEN);
+
+        holes.add(hole1);
+        holes.add(hole2);
 
         int idCount = 0;
         for(int x=0; x<WIDTH; x++){
@@ -65,5 +72,15 @@ public class World {
                 i.setCoordinates(position);
             }
         }
+    }
+
+    public void removeBall(int id) {
+        GameItem removeBall = null;
+        for (GameItem i : balls) {
+            if (i.getId() == id) {
+                removeBall = i;
+            }
+        }
+        balls.remove(removeBall);
     }
 }
