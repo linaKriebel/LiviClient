@@ -30,16 +30,19 @@ public class MessageListener implements Runnable{
                 //TODO handle commands
                 String[] split = receivedMessage.split(" ");
                 String command = split[0];
-                ItemType type = ItemType.valueOf(split[1]);
-                int id = Integer.parseInt(split[2]);
                 if (command.equals("MOVE")) {
+                    ItemType type = ItemType.valueOf(split[1]);
+                    int id = Integer.parseInt(split[2]);
                     Coordinate coordinate = new Coordinate(Integer.parseInt(split[3]), Integer.parseInt(split[4]));
                     client.processMovement(coordinate, id, type);
-                } else {
+                } else if (command.equals("REMOVE") ){
+                    int id = Integer.parseInt(split[2]);
                     client.getWorld().removeBall(id);
-                    client.repaint();
-                    //TODO: add score to player
+                } else if (command.equals("SCORE")) {
+                    int id = Integer.parseInt(split[2]);
+                    client.getWorld().getPlayer(id).score();
                 }
+                client.repaint();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -29,15 +29,9 @@ public class Client {
 
     public void drawFrame() {
         frame = new JFrame();
-        JLabel player1Label = new JLabel("Player One: 0");
-        JLabel player2Label = new JLabel("Player Two: 0");
 
         WorldPanel panel = new WorldPanel(world);
         panel.setBackground(Color.BLACK);
-        player1Label.setForeground(Color.MAGENTA);
-        panel.add(player1Label);
-        player2Label.setForeground(Color.YELLOW);
-        panel.add(player2Label);
 
         frame.addKeyListener(new InputManager(this));
         frame.setTitle("Livi");
@@ -53,13 +47,10 @@ public class Client {
         if (type == ItemType.PLAYER) world.setPlayerCoordinates(number, position);
 
         if (type == ItemType.BALL) world.setBallCoordinates(number, position);
-
-        repaint();
     }
 
     public void repaint() {
         frame.repaint();
-
     }
 
 

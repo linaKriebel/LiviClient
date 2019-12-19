@@ -66,6 +66,15 @@ public class World {
         }
     }
 
+    public GameItem getPlayer(int id) {
+        for (GameItem i : players) {
+            if (i.getId() == id) {
+                return i;
+            }
+        }
+        return null;
+    }
+
     public void setBallCoordinates(int id, Coordinate position){
         for (GameItem i : balls) {
             if (i.getId() == id) {
