@@ -8,7 +8,8 @@ public class GUI {
     private Client client;
     private World world;
     private JFrame frame;
-    JPanel root;
+    private JPanel root;
+    private WorldPanel worldPanel;
 
     public GUI(Client client, World world) {
         this.client = client;
@@ -19,6 +20,7 @@ public class GUI {
         frame = new JFrame();
 
         root = new JPanel(new CardLayout());
+        CardLayout cardLayout = (CardLayout) root.getLayout();
 
         JPanel startPanel = new JPanel(new GridLayout());
         JButton startButton = new JButton("START GAME");
@@ -30,13 +32,12 @@ public class GUI {
         });
         startPanel.add(startButton);
 
-        WorldPanel panel = new WorldPanel(world);
-        panel.setBackground(Color.BLACK);
+        worldPanel = new WorldPanel(world);
+        worldPanel.setBackground(Color.BLACK);
 
         root.add(startPanel, "START");
-        root.add(panel, "WORLD");
+        root.add(worldPanel, "WORLD");
 
-        CardLayout cardLayout = (CardLayout) root.getLayout();
         cardLayout.show(root, "START");
 
         frame.addKeyListener(new InputManager(client));
@@ -50,6 +51,7 @@ public class GUI {
     }
 
     public void startGame() {
+        worldPanel.requestFocusInWindow();
         CardLayout cardLayout = (CardLayout) root.getLayout();
         cardLayout.show(root, "WORLD");
     }
