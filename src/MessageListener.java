@@ -1,49 +1,41 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import models.GameEvent;
+
+import java.io.*;
 import java.net.Socket;
 
 public class MessageListener implements Runnable{
 
     private Socket socket;
-    private BufferedReader bufferedReader;
     private Client client;
+    private ObjectInputStream inputStream;
 
     public MessageListener(Socket socket, Client client) throws IOException {
         this.client = client;
         this.socket = socket;
-        InputStream inputStream = socket.getInputStream();
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        bufferedReader = new BufferedReader(inputStreamReader);
+        inputStream = new ObjectInputStream(socket.getInputStream());
     }
 
     @Override
     public void run() {
         while (true) {
             //Get the return message from the server
-            String receivedMessage = null;
             try {
-                receivedMessage = bufferedReader.readLine();
-                System.out.println("Message from server: " + receivedMessage);
-
-                //TODO handle commands
-                String[] split = receivedMessage.split(" ");
-                String command = split[0];
-                if (command.equals("MOVE")) {
-                    ItemType type = ItemType.valueOf(split[1]);
-                    int id = Integer.parseInt(split[2]);
-                    Coordinate coordinate = new Coordinate(Integer.parseInt(split[3]), Integer.parseInt(split[4]));
-                    client.processMovement(coordinate, id, type);
-                } else if (command.equals("REMOVE") ){
-                    int id = Integer.parseInt(split[2]);
-                    client.getWorld().removeBall(id);
-                } else if (command.equals("SCORE")) {
-                    int id = Integer.parseInt(split[2]);
-                    client.getWorld().getPlayer(id).score();
+                GameEvent event = (GameEvent) inputStream.readObject();
+                switch (event.getCommand()) {
+                    case START:
+                        client.getGui().startGame();
+                    case MOVE:
+                        client.processMovement(event.getField(), event.getItemId(), event.getItemType());
+                        break;
+                    case REMOVE:
+                        client.getWorld().removeBall(event.getItemId());
+                        break;
+                    case SCORE:
+                        client.getWorld().getPlayer(event.getItemId()).score();
+                        break;
                 }
-                client.repaint();
-            } catch (IOException e) {
+                client.getGui().repaint();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

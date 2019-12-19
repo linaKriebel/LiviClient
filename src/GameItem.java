@@ -1,25 +1,27 @@
+import models.Field;
+
 import java.awt.*;
 
 public class GameItem {
 
-    private Coordinate coordinates;
+    private Field coordinates;
     private int id;
     private Color color;
     private int score;
 
 
-    public GameItem(Coordinate coordinates, int id, Color color) {
+    public GameItem(Field coordinates, int id, Color color) {
         this.coordinates = coordinates;
         this.id = id;
         this.color = color;
         this.score = 0;
     }
 
-    public Coordinate getCoordinates() {
+    public Field getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(Coordinate coordinates) {
+    public void setCoordinates(Field coordinates) {
         this.coordinates = coordinates;
     }
 

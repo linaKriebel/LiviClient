@@ -1,3 +1,6 @@
+import models.Field;
+import models.ItemType;
+
 import javax.swing.*;
 import java.io.*;
 import java.awt.*;
@@ -8,12 +11,13 @@ public class Client {
 
     private Socket socket;
     private World world = new World();
-    private JFrame frame;
     private BufferedWriter bufferedWriter;
     private MessageListener messageListener;
+    private GUI gui;
 
     public Client(String host, int port) {
         try {
+            gui = new GUI(this, world);
             socket = new Socket(host, port);
             OutputStream outputStream = socket.getOutputStream();
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
@@ -27,32 +31,11 @@ public class Client {
         }
     }
 
-    public void drawFrame() {
-        frame = new JFrame();
-
-        WorldPanel panel = new WorldPanel(world);
-        panel.setBackground(Color.BLACK);
-
-        frame.addKeyListener(new InputManager(this));
-        frame.setTitle("Livi");
-        frame.setSize(new Dimension(600, 650));
-
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
-        frame.add(panel);
-        frame.setVisible(true);
-    }
-
-    public void processMovement(Coordinate position, int number, ItemType type) {
+    public void processMovement(Field position, int number, ItemType type) {
         if (type == ItemType.PLAYER) world.setPlayerCoordinates(number, position);
 
         if (type == ItemType.BALL) world.setBallCoordinates(number, position);
     }
-
-    public void repaint() {
-        frame.repaint();
-    }
-
 
     public void sendMessageToServer(String message) {
         System.out.println(message);
@@ -67,7 +50,6 @@ public class Client {
         }
     }
 
-
     public Socket getSocket() {
         return socket;
     }
@@ -76,4 +58,7 @@ public class Client {
         return world;
     }
 
+    public GUI getGui() {
+        return gui;
+    }
 }
