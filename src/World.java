@@ -1,4 +1,5 @@
 import models.Field;
+import models.GameEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -92,5 +93,15 @@ public class World {
             }
         }
         balls.remove(removeBall);
+    }
+
+    public void removePlayer(int id) {
+        GameItem removePlayer = null;
+        for (GameItem i : players) {
+            if (i.getId() == id) {
+                removePlayer = i;
+            }
+        }
+        players.remove(removePlayer);
     }
 }

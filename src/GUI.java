@@ -2,8 +2,7 @@ import models.ClientCommand;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class GUI {
 
@@ -50,6 +49,13 @@ public class GUI {
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
         frame.add(root);
         frame.setVisible(true);
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                client.sendMessageToServer(ClientCommand.END);
+            }
+        });
     }
 
     public void startGame() {

@@ -33,6 +33,8 @@ public class MessageListener implements Runnable{
                     case SCORE:
                         client.getWorld().getPlayer(event.getItemId()).score();
                         break;
+                    case END:
+                        client.getWorld().removePlayer(event.getItemId());
                 }
                 client.getGui().repaint();
             } catch (Exception e) {
