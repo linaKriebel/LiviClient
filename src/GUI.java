@@ -11,6 +11,9 @@ public class GUI {
     private JFrame frame;
     private JPanel root;
     private WorldPanel worldPanel;
+    private JLabel countDownLabel;
+    private int counterValue = 10;
+    private Timer timer;
 
     public GUI(Client client, World world) {
         this.client = client;
@@ -30,6 +33,7 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 client.sendMessageToServer(ClientCommand.START);
+                startCountDown();
             }
         });
         startPanel.add(startButton);
@@ -39,6 +43,9 @@ public class GUI {
         worldPanel.setFocusable(true);
         worldPanel.setRequestFocusEnabled(true);
         worldPanel.addKeyListener(new InputManager(client));
+        countDownLabel = new JLabel();
+        countDownLabel.setText(String.valueOf(counterValue));
+        worldPanel.add(countDownLabel);
 
         root.add(startPanel, "START");
         root.add(worldPanel, "WORLD");
@@ -55,7 +62,7 @@ public class GUI {
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                client.sendMessageToServer(ClientCommand.END);
+                client.sendMessageToServer(ClientCommand.EXIT);
             }
         });
         frame.setVisible(true);
@@ -72,4 +79,17 @@ public class GUI {
         frame.repaint();
     }
 
+    private void startCountDown() {
+        timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                counterValue--;
+                countDownLabel.setText(String.valueOf(counterValue));
+                if(counterValue == 0){
+                    timer.stop();
+                    client.sendMessageToServer(ClientCommand.COUNTDOWN);
+                }
+            }
+        });
+        timer.start();
+    }
 }
