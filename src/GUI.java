@@ -19,6 +19,7 @@ public class GUI {
 
     public void drawFrame() {
         frame = new JFrame();
+        frame.setFocusable(false);
 
         root = new JPanel(new CardLayout());
         CardLayout cardLayout = (CardLayout) root.getLayout();
@@ -35,20 +36,21 @@ public class GUI {
 
         worldPanel = new WorldPanel(world);
         worldPanel.setBackground(Color.BLACK);
+        worldPanel.setFocusable(true);
+        worldPanel.setRequestFocusEnabled(true);
+        worldPanel.addKeyListener(new InputManager(client));
 
         root.add(startPanel, "START");
         root.add(worldPanel, "WORLD");
 
         cardLayout.show(root, "START");
 
-        frame.addKeyListener(new InputManager(client));
         frame.setTitle("Livi");
         frame.setSize(new Dimension(600, 650));
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
         frame.add(root);
-        frame.setVisible(true);
 
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -56,12 +58,14 @@ public class GUI {
                 client.sendMessageToServer(ClientCommand.END);
             }
         });
+        frame.setVisible(true);
+        worldPanel.requestFocus();
     }
 
     public void startGame() {
-        worldPanel.requestFocusInWindow();
         CardLayout cardLayout = (CardLayout) root.getLayout();
         cardLayout.show(root, "WORLD");
+        worldPanel.requestFocusInWindow();
     }
 
     public void repaint() {
