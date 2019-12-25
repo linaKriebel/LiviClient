@@ -11,6 +11,7 @@ public class GUI {
     private JFrame frame;
     private JPanel root;
     private WorldPanel worldPanel;
+    private JPanel endPanel;
     private JLabel countDownLabel;
     private int counterValue = 10;
     private Timer timer;
@@ -36,7 +37,11 @@ public class GUI {
                 startCountDown();
             }
         });
+        startButton.setBackground(Color.WHITE);
+        startButton.setAlignmentX(0.5f);
+        startButton.setAlignmentY(0.5f);
         startPanel.add(startButton);
+        startPanel.setBackground(Color.BLACK);
 
         worldPanel = new WorldPanel(world);
         worldPanel.setBackground(Color.BLACK);
@@ -47,8 +52,12 @@ public class GUI {
         countDownLabel.setText(String.valueOf(counterValue));
         worldPanel.add(countDownLabel);
 
+        endPanel = new JPanel(new GridLayout());
+        endPanel.setBackground(Color.BLACK);
+
         root.add(startPanel, "START");
         root.add(worldPanel, "WORLD");
+        root.add(endPanel, "END");
 
         cardLayout.show(root, "START");
 
@@ -77,6 +86,25 @@ public class GUI {
 
     public void repaint() {
         frame.repaint();
+    }
+
+    public void showFinalResult() {
+        CardLayout cardLayout = (CardLayout) root.getLayout();
+        cardLayout.show(root, "END");
+        int idOfPlayerWithHighestScore = 0;
+        int score = 0;
+        String resultText = "";
+        for (GameItem player : world.players) {
+            if (player.getScore() > score) {
+                score = player.getScore();
+                idOfPlayerWithHighestScore = player.getId();
+                resultText = "Player " + idOfPlayerWithHighestScore + " won";
+            }
+        // TODO add additional check for nobody won
+        }
+        JLabel resultLabel = new JLabel();
+        resultLabel.setText(resultText);
+        endPanel.add(resultLabel);
     }
 
     private void startCountDown() {

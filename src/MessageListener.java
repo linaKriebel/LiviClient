@@ -37,7 +37,7 @@ public class MessageListener implements Runnable{
                         client.getWorld().removePlayer(event.getItemId());
                         break;
                     case END:
-                        // display message which informs about the winner of the game
+                        client.getGui().showFinalResult();
                         break;
                 }
                 client.getGui().repaint();
