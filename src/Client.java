@@ -1,9 +1,8 @@
+import models.ClientCommand;
 import models.Field;
 import models.ItemType;
 
-import javax.swing.*;
 import java.io.*;
-import java.awt.*;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -11,7 +10,7 @@ public class Client {
 
     private Socket socket;
     private World world = new World();
-    private BufferedWriter bufferedWriter;
+    private ObjectOutputStream os;
     private MessageListener messageListener;
     private GUI gui;
 
@@ -19,9 +18,7 @@ public class Client {
         try {
             gui = new GUI(this, world);
             socket = new Socket(host, port);
-            OutputStream outputStream = socket.getOutputStream();
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
-            bufferedWriter = new BufferedWriter(outputStreamWriter);
+            os = new ObjectOutputStream(socket.getOutputStream());
 
             messageListener = new MessageListener(socket, this);
             Thread thread = new Thread(messageListener);
@@ -37,13 +34,10 @@ public class Client {
         if (type == ItemType.BALL) world.setBallCoordinates(number, position);
     }
 
-    public void sendMessageToServer(String message) {
+    public void sendMessageToServer(ClientCommand message) {
         System.out.println(message);
-        message = message + "\n";
-
         try {
-            bufferedWriter.write(message);
-            bufferedWriter.flush();
+            os.writeObject(message);
 
         } catch (IOException e) {
             e.printStackTrace();

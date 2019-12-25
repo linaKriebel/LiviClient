@@ -1,3 +1,5 @@
+import models.ClientCommand;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +29,7 @@ public class GUI {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                client.sendMessageToServer("start");
+                client.sendMessageToServer(ClientCommand.START);
             }
         });
         startPanel.add(startButton);

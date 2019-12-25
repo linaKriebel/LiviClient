@@ -1,3 +1,5 @@
+import models.ClientCommand;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -17,16 +19,16 @@ public class InputManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            client.sendMessageToServer("right");
+            client.sendMessageToServer(ClientCommand.RIGHT);
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            client.sendMessageToServer("left");
+            client.sendMessageToServer(ClientCommand.LEFT);
         }
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            client.sendMessageToServer("up");
+            client.sendMessageToServer(ClientCommand.UP);
         }
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            client.sendMessageToServer("down");
+            client.sendMessageToServer(ClientCommand.DOWN);
         }
     }
 
