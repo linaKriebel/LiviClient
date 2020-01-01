@@ -48,8 +48,11 @@ public class GUI {
         worldPanel.setFocusable(true);
         worldPanel.setRequestFocusEnabled(true);
         worldPanel.addKeyListener(new InputManager(client));
+
         countDownLabel = new JLabel();
         countDownLabel.setText(String.valueOf(counterValue));
+        countDownLabel.setForeground(Color.WHITE);
+        countDownLabel.setVerticalTextPosition(SwingConstants.CENTER);
         worldPanel.add(countDownLabel);
 
         endPanel = new JPanel(new GridLayout());
@@ -74,6 +77,7 @@ public class GUI {
                 client.sendMessageToServer(ClientCommand.EXIT);
             }
         });
+
         frame.setVisible(true);
         worldPanel.requestFocus();
     }
@@ -91,19 +95,26 @@ public class GUI {
     public void showFinalResult() {
         CardLayout cardLayout = (CardLayout) root.getLayout();
         cardLayout.show(root, "END");
+
         int idOfPlayerWithHighestScore = 0;
         int score = 0;
-        String resultText = "";
+        String resultText = "nobody won";
+        Color playerColor = Color.WHITE;
+
         for (GameItem player : world.players) {
             if (player.getScore() > score) {
                 score = player.getScore();
                 idOfPlayerWithHighestScore = player.getId();
                 resultText = "Player " + idOfPlayerWithHighestScore + " won";
+                playerColor = player.getColor();
             }
         // TODO add additional check for nobody won
         }
         JLabel resultLabel = new JLabel();
         resultLabel.setText(resultText);
+        resultLabel.setVerticalTextPosition(SwingConstants.CENTER);
+        resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        resultLabel.setForeground(playerColor);
         endPanel.add(resultLabel);
     }
 
