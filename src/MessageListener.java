@@ -12,9 +12,6 @@ public class MessageListener implements Runnable {
     private Client client;
     private ObjectInputStream inputStream;
 
-    private boolean isStartMessage = false;
-    private int count = 0;
-
     public MessageListener(Socket socket, Client client) throws IOException {
         this.client = client;
         this.socket = socket;
