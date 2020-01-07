@@ -27,8 +27,7 @@ public class MessageListener implements Runnable {
                 System.out.println("Message from server: " + event.getCommand());
                 switch (event.getCommand()) {
                     case START:
-                        //TODO fix damn OptionalDataException!!!
-                        //client.getWorld().setUp(event.getPlayers(), event.getBalls(), event.getObstacles(), event.getHoles());
+                        client.getWorld().setUp(event.getPlayers(), event.getBalls(), event.getObstacles(), event.getHoles());
                         client.getGui().startGame();
                     case MOVE:
                         client.processMovement(event.getItemType(), event.getItemId(), event.getField());
