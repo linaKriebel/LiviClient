@@ -40,8 +40,7 @@ public class GUI {
             }
         });
         startButton.setBackground(Color.WHITE);
-        //startButton.setAlignmentX(0.5f);
-        //startButton.setAlignmentY(0.5f);
+        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         startPanel.add(startButton);
         startPanel.setBackground(Color.BLACK);
 
@@ -55,6 +54,7 @@ public class GUI {
         countDownLabel.setText(String.valueOf(counterValue));
         countDownLabel.setForeground(Color.WHITE);
         countDownLabel.setVerticalTextPosition(SwingConstants.CENTER);
+        countDownLabel.setFont(new Font(countDownLabel.getFont().getName(), Font.PLAIN, 20));
         worldPanel.add(countDownLabel);
 
         endPanel = new JPanel(new GridLayout());
@@ -89,6 +89,8 @@ public class GUI {
         registered.setText("Player " + id + " joined the game");
         registered.setForeground(Color.WHITE);
         registered.setHorizontalTextPosition(SwingConstants.CENTER);
+        registered.setFont(new Font(registered.getFont().getName(), Font.PLAIN, 20));
+        registered.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         startPanel.add(registered);
         startPanel.revalidate();

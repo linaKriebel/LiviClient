@@ -15,10 +15,12 @@ public class WorldPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        g.setFont(new Font(g.getFont().getFontName(), Font.PLAIN, 20));
+
 
         for (GameItem player : world.players) {
             g.setColor(player.getColor());
-            g.drawString("Player " + player.getId() + " : " + player.getScore(), 100, player.getId() * 10);
+            if(player.getId() != 0) g.drawString("Player " + player.getId() + " : " + player.getScore(), 450, player.getId() * 20);
             g.fillOval(player.getCoordinates().x * 30, player.getCoordinates().y * 30, 30, 30);
         }
         for (GameItem ball : world.balls) {
