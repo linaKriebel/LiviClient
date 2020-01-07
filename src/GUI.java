@@ -37,7 +37,6 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 client.sendMessageToServer(ClientCommand.START);
-                startCountDown();
             }
         });
         startButton.setBackground(Color.WHITE);
@@ -99,6 +98,7 @@ public class GUI {
         CardLayout cardLayout = (CardLayout) root.getLayout();
         cardLayout.show(root, "WORLD");
         worldPanel.requestFocusInWindow();
+        startCountDown();
     }
 
     public void repaint() {
