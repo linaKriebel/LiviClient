@@ -1,3 +1,5 @@
+package maze;
+
 import models.Field;
 
 import java.util.ArrayList;
