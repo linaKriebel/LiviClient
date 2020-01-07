@@ -17,6 +17,7 @@ public class GUI {
     private JLabel countDownLabel;
     private int counterValue = 60;
     private Timer timer;
+    private boolean loaded = false;
 
     public GUI(Client client, World world) {
         this.client = client;
@@ -26,6 +27,15 @@ public class GUI {
     public void drawFrame() {
         frame = new JFrame();
         frame.setFocusable(false);
+
+        frame.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowOpened(WindowEvent e) {
+                loaded = true;
+            }
+        });
+
 
         root = new JPanel(new CardLayout());
         CardLayout cardLayout = (CardLayout) root.getLayout();
@@ -85,12 +95,27 @@ public class GUI {
     }
 
     public void updateStartPanel(int id) {
+        while(!loaded){
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         JLabel registered = new JLabel();
-        registered.setText("Player " + id + " joined the game");
         registered.setForeground(Color.WHITE);
-        registered.setHorizontalTextPosition(SwingConstants.CENTER);
         registered.setFont(new Font(registered.getFont().getName(), Font.PLAIN, 20));
+        registered.setHorizontalTextPosition(SwingConstants.CENTER);
         registered.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        String text;
+        if(id == client.id) {
+            text = "You are Player " + id;
+        } else {
+            text = "Player " + id + " joined the game";
+        }
+        registered.setText(text);
 
         startPanel.add(registered);
         startPanel.revalidate();
