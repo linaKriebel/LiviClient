@@ -1,20 +1,30 @@
-import models.Field;
+package models;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class GameItem {
+public class GameItem implements Serializable {
 
-    private Field coordinates;
+    private ItemType type;
     private int id;
+    private Field coordinates;
     private Color color;
     private int score;
 
-
-    public GameItem(Field coordinates, int id, Color color) {
-        this.coordinates = coordinates;
+    public GameItem(ItemType type, int id, Field coordinates, Color color) {
+        this.type = type;
         this.id = id;
+        this.coordinates = coordinates;
         this.color = color;
         this.score = 0;
+    }
+
+    public ItemType getType() {
+        return type;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Field getCoordinates() {
@@ -23,10 +33,6 @@ public class GameItem {
 
     public void setCoordinates(Field coordinates) {
         this.coordinates = coordinates;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public Color getColor() {
@@ -45,4 +51,3 @@ public class GameItem {
         this.score += 1;
     }
 }
-

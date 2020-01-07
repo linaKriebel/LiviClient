@@ -1,4 +1,6 @@
 
+import models.GameItem;
+
 import javax.swing.*;
 import java.awt.*;
 

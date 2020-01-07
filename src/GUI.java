@@ -1,4 +1,5 @@
 import models.ClientCommand;
+import models.GameItem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ public class GUI {
     private WorldPanel worldPanel;
     private JPanel endPanel;
     private JLabel countDownLabel;
-    private int counterValue = 10;
+    private int counterValue = 60;
     private Timer timer;
 
     public GUI(Client client, World world) {

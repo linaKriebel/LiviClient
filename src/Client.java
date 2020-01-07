@@ -28,24 +28,18 @@ public class Client {
         }
     }
 
-    public void processMovement(Field position, int number, ItemType type) {
-        if (type == ItemType.PLAYER) world.setPlayerCoordinates(number, position);
-
-        if (type == ItemType.BALL) world.setBallCoordinates(number, position);
+    public void processMovement(ItemType type, int id, Field field) {
+        if (type == ItemType.PLAYER) world.setPlayerCoordinates(id, field);
+        if (type == ItemType.BALL) world.setBallCoordinates(id, field);
     }
 
     public void sendMessageToServer(ClientCommand message) {
         System.out.println(message);
         try {
             os.writeObject(message);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public Socket getSocket() {
-        return socket;
     }
 
     public World getWorld() {
