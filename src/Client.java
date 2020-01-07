@@ -14,6 +14,8 @@ public class Client {
     private MessageListener messageListener;
     private GUI gui;
 
+    public int id = 0;
+
     public Client(String host, int port) {
         try {
             gui = new GUI(this, world);

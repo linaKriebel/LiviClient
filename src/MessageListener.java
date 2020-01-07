@@ -1,10 +1,7 @@
 import models.GameEvent;
-import models.GameItem;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MessageListener implements Runnable {
 
@@ -26,9 +23,14 @@ public class MessageListener implements Runnable {
                 GameEvent event = (GameEvent) inputStream.readObject();
                 System.out.println("Message from server: " + event.getCommand());
                 switch (event.getCommand()) {
+                    case REGISTER:
+                        if(client.id == 0) client.id = event.getItemId();
+                        client.getGui().updateStartPanel(event.getItemId());
+                        break;
                     case START:
                         client.getWorld().setUp(event.getPlayers(), event.getBalls(), event.getObstacles(), event.getHoles());
                         client.getGui().startGame();
+                        break;
                     case MOVE:
                         client.processMovement(event.getItemType(), event.getItemId(), event.getField());
                         break;

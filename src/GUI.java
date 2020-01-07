@@ -11,6 +11,7 @@ public class GUI {
     private World world;
     private JFrame frame;
     private JPanel root;
+    private JPanel startPanel;
     private WorldPanel worldPanel;
     private JPanel endPanel;
     private JLabel countDownLabel;
@@ -29,7 +30,8 @@ public class GUI {
         root = new JPanel(new CardLayout());
         CardLayout cardLayout = (CardLayout) root.getLayout();
 
-        JPanel startPanel = new JPanel(new GridLayout());
+        startPanel = new JPanel();
+        startPanel.setLayout(new BoxLayout(startPanel, BoxLayout.PAGE_AXIS));
         JButton startButton = new JButton("START GAME");
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -39,8 +41,8 @@ public class GUI {
             }
         });
         startButton.setBackground(Color.WHITE);
-        startButton.setAlignmentX(0.5f);
-        startButton.setAlignmentY(0.5f);
+        //startButton.setAlignmentX(0.5f);
+        //startButton.setAlignmentY(0.5f);
         startPanel.add(startButton);
         startPanel.setBackground(Color.BLACK);
 
@@ -83,6 +85,16 @@ public class GUI {
         worldPanel.requestFocus();
     }
 
+    public void updateStartPanel(int id) {
+        JLabel registered = new JLabel();
+        registered.setText("Player " + id + " joined the game");
+        registered.setForeground(Color.WHITE);
+        registered.setHorizontalTextPosition(SwingConstants.CENTER);
+
+        startPanel.add(registered);
+        startPanel.revalidate();
+    }
+
     public void startGame() {
         CardLayout cardLayout = (CardLayout) root.getLayout();
         cardLayout.show(root, "WORLD");
@@ -106,10 +118,13 @@ public class GUI {
             if (player.getScore() > score) {
                 score = player.getScore();
                 idOfPlayerWithHighestScore = player.getId();
-                resultText = "Player " + idOfPlayerWithHighestScore + " won";
+                if (idOfPlayerWithHighestScore == client.id) {
+                    resultText = "You won!";
+                } else {
+                    resultText = "Player " + idOfPlayerWithHighestScore + " won";
+                }
                 playerColor = player.getColor();
             }
-        // TODO add additional check for nobody won
         }
         JLabel resultLabel = new JLabel();
         resultLabel.setText(resultText);
