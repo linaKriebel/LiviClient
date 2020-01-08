@@ -2,6 +2,7 @@ import models.ClientCommand;
 import models.GameItem;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
@@ -41,9 +42,12 @@ public class GUI {
         root = new JPanel(new CardLayout());
         CardLayout cardLayout = (CardLayout) root.getLayout();
 
-        startPanel = new JPanel(new GridBagLayout());
+        startPanel = new JPanel();
+        startPanel.setLayout(new BoxLayout(startPanel, BoxLayout.Y_AXIS));
+        startPanel.setBorder(new EmptyBorder(new Insets(150, 200, 150, 200)));
+        startPanel.setBackground(Color.BLACK);
+
         JButton startButton = new JButton("START GAME");
-        startButton.setSize(1000, 1000);
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,8 +57,11 @@ public class GUI {
         startButton.setBackground(Color.BLACK);
         startButton.setForeground(Color.CYAN);
         startButton.setBorder(new LineBorder(Color.CYAN));
+        startButton.setFont(new Font(startButton.getFont().getName(), Font.PLAIN, 20));
+        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         startPanel.add(startButton);
-        startPanel.setBackground(Color.BLACK);
+        startPanel.add(Box.createVerticalStrut(20));
 
         worldPanel = new WorldPanel(world);
         worldPanel.setBackground(Color.BLACK);
