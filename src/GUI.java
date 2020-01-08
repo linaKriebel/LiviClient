@@ -2,6 +2,8 @@ import models.ClientCommand;
 import models.GameItem;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -36,21 +38,21 @@ public class GUI {
             }
         });
 
-
         root = new JPanel(new CardLayout());
         CardLayout cardLayout = (CardLayout) root.getLayout();
 
-        startPanel = new JPanel();
-        startPanel.setLayout(new BoxLayout(startPanel, BoxLayout.PAGE_AXIS));
+        startPanel = new JPanel(new GridBagLayout());
         JButton startButton = new JButton("START GAME");
+        startButton.setSize(1000, 1000);
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 client.sendMessageToServer(ClientCommand.START);
             }
         });
-        startButton.setBackground(Color.WHITE);
-        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        startButton.setBackground(Color.BLACK);
+        startButton.setForeground(Color.CYAN);
+        startButton.setBorder(new LineBorder(Color.CYAN));
         startPanel.add(startButton);
         startPanel.setBackground(Color.BLACK);
 
@@ -69,6 +71,10 @@ public class GUI {
 
         endPanel = new JPanel(new GridLayout());
         endPanel.setBackground(Color.BLACK);
+        resultLabel = new JLabel();
+        resultLabel.setVerticalTextPosition(SwingConstants.CENTER);
+        resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        endPanel.add(resultLabel);
 
         root.add(startPanel, "START");
         root.add(worldPanel, "WORLD");
@@ -112,7 +118,7 @@ public class GUI {
         String text;
         if(id == client.id) {
             text = "You are Player " + id;
-        } else {
+         } else {
             text = "Player " + id + " joined the game";
         }
         registered.setText(text);
@@ -145,6 +151,7 @@ public class GUI {
             if (player.getScore() > score) {
                 score = player.getScore();
                 idOfPlayerWithHighestScore = player.getId();
+                System.out.println("client id " + client.id + "playerID " + player.getId() + "score " + player.getScore());
                 if (idOfPlayerWithHighestScore == client.id) {
                     resultText = "You won!";
                 } else {
@@ -153,12 +160,9 @@ public class GUI {
                 playerColor = player.getColor();
             }
         }
-        JLabel resultLabel = new JLabel();
+
         resultLabel.setText(resultText);
-        resultLabel.setVerticalTextPosition(SwingConstants.CENTER);
-        resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
         resultLabel.setForeground(playerColor);
-        endPanel.add(resultLabel);
     }
 
     private void startCountDown() {
