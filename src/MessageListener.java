@@ -8,6 +8,7 @@ public class MessageListener implements Runnable {
     private Socket socket;
     private Client client;
     private ObjectInputStream inputStream;
+    private boolean gameEnded = false;
 
     public MessageListener(Socket socket, Client client) throws IOException {
         this.client = client;
@@ -44,7 +45,8 @@ public class MessageListener implements Runnable {
                         client.getWorld().removePlayer(event.getItemId());
                         break;
                     case END:
-                        client.getGui().showFinalResult();
+                        if (!gameEnded) client.getGui().showFinalResult();
+                        gameEnded = true;
                         break;
                 }
                 client.getGui().repaint();

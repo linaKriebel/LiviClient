@@ -76,12 +76,16 @@ public class GUI {
         countDownLabel.setFont(new Font(countDownLabel.getFont().getName(), Font.PLAIN, 20));
         worldPanel.add(countDownLabel);
 
-        endPanel = new JPanel(new GridLayout());
+        endPanel = new JPanel();
+        endPanel.setLayout(new BoxLayout(endPanel, BoxLayout.Y_AXIS));
+        endPanel.setBorder(new EmptyBorder(new Insets(150, 200, 150, 200)));
         endPanel.setBackground(Color.BLACK);
+
         resultLabel = new JLabel();
-        resultLabel.setVerticalTextPosition(SwingConstants.CENTER);
-        resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        resultLabel.setFont(new Font(resultLabel.getFont().getName(), Font.PLAIN, 20));
+        resultLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         endPanel.add(resultLabel);
+        endPanel.add(Box.createVerticalStrut(20));
 
         root.add(startPanel, "START");
         root.add(worldPanel, "WORLD");
@@ -126,7 +130,7 @@ public class GUI {
         if(id == client.id) {
             text = "You are Player " + id;
          } else {
-            text = "Player " + id + " joined the game";
+            text = "Player " + id + " joined";
         }
         registered.setText(text);
 
@@ -155,12 +159,24 @@ public class GUI {
         Color playerColor = Color.WHITE;
 
         for (GameItem player : world.players) {
+            JLabel playerScore = new JLabel();
+            if (player.getId() == 0) {
+                playerScore.setText("AI : " + player.getScore());
+            } else {
+                playerScore.setText("Player " + player.getId() + " : " + player.getScore());
+            }
+            playerScore.setForeground(player.getColor());
+            playerScore.setFont(new Font(playerScore.getFont().getName(), Font.PLAIN, 20));
+            playerScore.setHorizontalTextPosition(SwingConstants.CENTER);
+            playerScore.setAlignmentX(Component.CENTER_ALIGNMENT);
+            endPanel.add(playerScore);
             if (player.getScore() > score) {
                 score = player.getScore();
                 idOfPlayerWithHighestScore = player.getId();
-                System.out.println("client id " + client.id + "playerID " + player.getId() + "score " + player.getScore());
                 if (idOfPlayerWithHighestScore == client.id) {
                     resultText = "You won!";
+                } else if (idOfPlayerWithHighestScore == 0) {
+                    resultText = "AI won";
                 } else {
                     resultText = "Player " + idOfPlayerWithHighestScore + " won";
                 }
