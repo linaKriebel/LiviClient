@@ -2,7 +2,6 @@ import models.ClientCommand;
 import models.GameItem;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
@@ -17,6 +16,7 @@ public class GUI {
     private WorldPanel worldPanel;
     private JPanel endPanel;
     private JLabel countDownLabel;
+    private JLabel resultLabel;
     private int counterValue = 60;
     private Timer timer;
     private boolean loaded = false;
