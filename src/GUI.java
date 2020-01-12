@@ -161,7 +161,7 @@ public class GUI {
         for (GameItem player : world.players) {
             JLabel playerScore = new JLabel();
             if (player.getId() == 0) {
-                playerScore.setText("AI : " + player.getScore());
+                playerScore.setText("");
             } else {
                 playerScore.setText("Player " + player.getId() + " : " + player.getScore());
             }
@@ -175,8 +175,6 @@ public class GUI {
                 idOfPlayerWithHighestScore = player.getId();
                 if (idOfPlayerWithHighestScore == client.id) {
                     resultText = "You won!";
-                } else if (idOfPlayerWithHighestScore == 0) {
-                    resultText = "AI won";
                 } else {
                     resultText = "Player " + idOfPlayerWithHighestScore + " won";
                 }
