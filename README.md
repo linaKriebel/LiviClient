@@ -1,6 +1,6 @@
 # LiviClient
 
-This project is the client application of the Livi game.
+This project is the client application of the multiplayer game Livi.
 
 ![Alt text](src/images/Livi.png)
 

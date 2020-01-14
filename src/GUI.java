@@ -35,7 +35,6 @@ public class GUI {
     public void drawFrame() {
         frame = new JFrame();
         frame.setFocusable(false);
-
         frame.addWindowListener(new WindowAdapter() {
 
             @Override
@@ -47,6 +46,7 @@ public class GUI {
         root = new JPanel(new CardLayout());
         CardLayout cardLayout = (CardLayout) root.getLayout();
 
+        // setup game start panel
         startPanel = new JPanel();
         startPanel.setLayout(new BoxLayout(startPanel, BoxLayout.Y_AXIS));
         startPanel.setBorder(new EmptyBorder(new Insets(150, 200, 150, 200)));
@@ -68,6 +68,7 @@ public class GUI {
         startPanel.add(startButton);
         startPanel.add(Box.createVerticalStrut(20));
 
+        //setup game panel
         worldPanel = new WorldPanel(world);
         worldPanel.setBackground(Color.BLACK);
         worldPanel.setFocusable(true);
@@ -81,6 +82,7 @@ public class GUI {
         countDownLabel.setFont(new Font(countDownLabel.getFont().getName(), Font.PLAIN, 20));
         worldPanel.add(countDownLabel);
 
+        //setup game end panel
         endPanel = new JPanel();
         endPanel.setLayout(new BoxLayout(endPanel, BoxLayout.Y_AXIS));
         endPanel.setBorder(new EmptyBorder(new Insets(150, 200, 150, 200)));
@@ -98,11 +100,12 @@ public class GUI {
 
         cardLayout.show(root, "START");
 
+        //frame setup
         frame.setTitle("Livi");
         frame.setSize(new Dimension(600, 650));
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+        frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
         frame.add(root);
 
         frame.addWindowListener(new WindowAdapter() {
@@ -117,7 +120,7 @@ public class GUI {
     }
 
     public void updateStartPanel(int id) {
-        while(!loaded){
+        while (!loaded) {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
@@ -132,9 +135,9 @@ public class GUI {
         registered.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         String text;
-        if(id == client.id) {
+        if (id == client.id) {
             text = "You are Player " + id;
-         } else {
+        } else {
             text = "Player " + id + " joined";
         }
         registered.setText(text);
@@ -196,7 +199,7 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 counterValue--;
                 countDownLabel.setText(String.valueOf(counterValue));
-                if(counterValue == 0){
+                if (counterValue == 0) {
                     timer.stop();
                     client.sendMessageToServer(ClientCommand.COUNTDOWN);
                 }
