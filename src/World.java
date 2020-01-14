@@ -4,16 +4,15 @@ import models.GameItem;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * holds current world setup
+ */
 public class World {
 
     public List<GameItem> players = new ArrayList<>();
     public List<GameItem> balls = new ArrayList<>();
     public List<GameItem> obstacles = new ArrayList<>();
     public List<GameItem> holes = new ArrayList<>();
-
-    public World(){
-
-    }
 
     public void setUp(List<GameItem> players, List<GameItem> balls, List<GameItem> obstacles, List<GameItem> holes){
         this.players = players;

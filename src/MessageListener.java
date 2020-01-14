@@ -3,16 +3,17 @@ import models.GameEvent;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * handles communication from server to client
+ */
 public class MessageListener implements Runnable {
 
-    private Socket socket;
     private Client client;
     private ObjectInputStream inputStream;
     private boolean gameEnded = false;
 
     public MessageListener(Socket socket, Client client) throws IOException {
         this.client = client;
-        this.socket = socket;
         inputStream = new ObjectInputStream(socket.getInputStream());
     }
 

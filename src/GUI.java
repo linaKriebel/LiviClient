@@ -7,6 +7,11 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * draws and updates the frames
+ * starts the timer and informs server of its finishing
+ * calculates and displays the final score and winner
+ */
 public class GUI {
 
     private Client client;

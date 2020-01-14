@@ -5,7 +5,10 @@ import models.ItemType;
 import java.io.*;
 import java.io.IOException;
 import java.net.Socket;
-
+/**
+ * registers to server
+ * handles communication from client to server
+ */
 public class Client {
 
     private Socket socket;

@@ -4,6 +4,9 @@ import models.GameItem;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * draws game items
+ */
 public class WorldPanel extends JPanel {
 
     private World world;
@@ -16,7 +19,6 @@ public class WorldPanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         g.setFont(new Font(g.getFont().getFontName(), Font.PLAIN, 20));
-
 
         for (GameItem player : world.players) {
             g.setColor(player.getColor());

@@ -2,7 +2,9 @@ import models.ClientCommand;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+/**
+ * handles player input
+ */
 public class InputManager implements KeyListener {
 
     private Client client;
